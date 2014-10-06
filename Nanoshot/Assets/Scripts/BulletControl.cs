@@ -21,7 +21,8 @@ public class BulletControl : MonoBehaviour {
 			Collider.Destroy(e.gameObject);
 			Collider.Destroy(this.gameObject);
 		}
-
-		//Debug.Log("hit");
+		else if(e.gameObject.tag == "Border"){
+			Collider.Destroy(this.gameObject);
+		}
 	}
 }
