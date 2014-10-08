@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{85ADCFA0-34BB-F5FB-37D7-7C1EA3E771FA}") = "Nanoshot", "Assembly-CSharp-firstpass-vs.csproj", "{F27023CF-4218-EB17-8A24-33623211A76A}"
 EndProject
+Project("{85ADCFA0-34BB-F5FB-37D7-7C1EA3E771FA}") = "Nanoshot", "Assembly-CSharp-vs.csproj", "{1128A661-E1ED-0972-D9E4-56954A4A6635}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,11 +15,15 @@ Global
 		{F27023CF-4218-EB17-8A24-33623211A76A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F27023CF-4218-EB17-8A24-33623211A76A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F27023CF-4218-EB17-8A24-33623211A76A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1128A661-E1ED-0972-D9E4-56954A4A6635}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1128A661-E1ED-0972-D9E4-56954A4A6635}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1128A661-E1ED-0972-D9E4-56954A4A6635}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1128A661-E1ED-0972-D9E4-56954A4A6635}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-					GlobalSection(MonoDevelopProperties) = preSolution
+								GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
