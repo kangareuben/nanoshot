@@ -18,8 +18,8 @@ public class BulletControl : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D e){
 
 		if(e.gameObject.tag == "Enemy"){
-			Collider.Destroy(e.gameObject);
 			Collider.Destroy(this.gameObject);
+			Collider.Destroy(e.gameObject);
 		}
 		else if(e.gameObject.tag == "Border"){
 			Collider.Destroy(this.gameObject);
