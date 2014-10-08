@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	// Rate the player can shoot
 	public float shotsPerSecond;
 
+
 	// Private variables
 	private const float _fireRate = 1f/60f;
 	private float _shotsPerSecond;
