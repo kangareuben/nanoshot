@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour {
 	// Move speed
 	public float speed;
 
+	// Lives
+	public int lives;
+
 	//Weapon type
 	public int weaponType;
 
@@ -25,7 +28,10 @@ public class PlayerController : MonoBehaviour {
 	private float _shotsPerSecond;
 	private float _shotDelay;
 	private Object _bullet;
-	private BulletControl bulletScript;
+	private BulletControl _bulletScript;
+	private BoxCollider2D _collider;
+
+	private GameHandler _gameHandler;
 
 	// Use this for initialization
 	void Start () {
@@ -33,19 +39,23 @@ public class PlayerController : MonoBehaviour {
 		_bullet = Resources.Load("Prefabs/bullet");
 
 		GameObject bulletObject = (GameObject)_bullet;
-		bulletScript = bulletObject.GetComponent<BulletControl>();
+		_collider = GetComponent<BoxCollider2D>();
+		_bulletScript = bulletObject.GetComponent<BulletControl>();
+
+		_gameHandler = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameHandler>();
+
 		weaponType = 0;
 
 		// Set variables
 		_shotsPerSecond = (60.0f/shotsPerSecond) * _fireRate;
 	}
 	
-	// Update is called once per frame
+	/*
+	 * Update is called once per frame
+	 */
 	void Update () {
 		float velX = 0.0f;
 		float velY = 0.0f;
-
-		BoxCollider2D collider = GetComponent<BoxCollider2D>();
 
 		// Check for up and down movement, else float
 		if(Input.GetKey(moveUp)){
@@ -70,40 +80,13 @@ public class PlayerController : MonoBehaviour {
 		// Check for shooting
 		if(Input.GetKey(shoot)){
 			if(_shotDelay >= _shotsPerSecond){
-				if(weaponType == 0)
-				{
-					bulletScript.speedX = 4;
-					bulletScript.speedY = 0;
+
+				switch(weaponType){
+					case 0: smallGunShoot(); break;
+					case 1: medGunShoot(); break;
+					case 2: largeGunShoot(); break;
 				}
-				else if(weaponType == 1)
-				{
-					bulletScript.speedX = 4;
-					bulletScript.speedY = 2;
-					Instantiate (_bullet, new Vector3(transform.position.x + (collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
-					bulletScript.speedX = 4;
-					bulletScript.speedY = 0;
-					Instantiate (_bullet, new Vector3(transform.position.x + (collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
-					bulletScript.speedX = 4;
-					bulletScript.speedY = -2;
-				}
-				else if(weaponType == 2)
-				{
-					bulletScript.speedX = 4;
-					bulletScript.speedY = 2.5f;
-					Instantiate (_bullet, new Vector3(transform.position.x + (collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
-					bulletScript.speedX = 4;
-					bulletScript.speedY = 1.25f;
-					Instantiate (_bullet, new Vector3(transform.position.x + (collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
-					bulletScript.speedX = 4;
-					bulletScript.speedY = 0;
-					Instantiate (_bullet, new Vector3(transform.position.x + (collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
-					bulletScript.speedX = 4;
-					bulletScript.speedY = -1.25f;
-					Instantiate (_bullet, new Vector3(transform.position.x + (collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
-					bulletScript.speedX = 4;
-					bulletScript.speedY = -2.5f;
-				}
-				Instantiate (_bullet, new Vector3(transform.position.x + (collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+
 				_shotDelay = 0.0f;
 			}
 		}
@@ -111,5 +94,68 @@ public class PlayerController : MonoBehaviour {
 		// Update variables
 		_shotDelay += _fireRate;
 		rigidbody2D.velocity = new Vector3(velX, velY, 0);
+	}
+
+	/*
+	 * Triggers for player picking up powerups and hitting enemies
+	 */
+	void OnTriggerEnter2D(Collider2D e){
+		if(e.gameObject.tag == "Enemy"){
+			Collider.Destroy (e.gameObject);
+			this.lives--;
+			_gameHandler.score--;
+		}
+	}
+
+	/*
+	 * Removes the player from the game, called on losing all lives
+	 */
+	public void explode(){
+		Collider.Destroy (this.gameObject);
+	}
+
+	/*
+	 * Fires single bullet straight
+	 */
+	void smallGunShoot(){
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = 0;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+	}
+
+	/*
+	 * Fires three bullets in a spread
+	 */
+	void medGunShoot(){
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = 2;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = 0;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = -2;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+	}
+
+	/*
+	 * Fires five bullets in a spread
+	 */
+	void largeGunShoot(){
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = 2.5f;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = 1.25f;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = 0;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = -1.25f;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
+		_bulletScript.speedX = 4;
+		_bulletScript.speedY = -2.5f;
+		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x + 0.3f), transform.position.y + 0.2f, 0f), transform.rotation);
 	}
 }

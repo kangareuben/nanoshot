@@ -5,11 +5,10 @@ public class EnemyControlOne : MonoBehaviour {
 
 	public float speed;
 
-	private Object _enemyOne;
 
 	// Use this for initialization
 	void Start () {
-		_enemyOne = Resources.Load("Prefabs/EnemyOne");
+
 	}
 	
 	// Update is called once per frame
@@ -29,6 +28,6 @@ public class EnemyControlOne : MonoBehaviour {
 
 	void OnDestroy()
 	{
-		Instantiate (_enemyOne, new Vector3(12f, Random.Range(-2, 1), 0), transform.rotation);
+
 	}
 }
