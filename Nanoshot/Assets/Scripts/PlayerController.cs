@@ -8,6 +8,11 @@ public class PlayerController : MonoBehaviour {
 	public KeyCode moveDown;
 	public KeyCode moveLeft;
 	public KeyCode moveRight;
+
+	public KeyCode wep1;
+	public KeyCode wep2;
+	public KeyCode wep3;
+
 	public KeyCode shoot;
 
 	// Move speed
@@ -75,6 +80,16 @@ public class PlayerController : MonoBehaviour {
 		}
 		else if(Input.GetKey(moveLeft)){
 			velX = speed * -1f;
+		}
+
+		if(Input.GetKey (wep1)){
+			weaponType = 0;
+
+		} else if(Input.GetKey (wep2)){
+			weaponType = 1;
+
+		} else if(Input.GetKey (wep3)){
+			weaponType = 2;
 		}
 
 		// Check for shooting
