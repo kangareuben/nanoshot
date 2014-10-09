@@ -21,7 +21,7 @@ public class EnemyControlOne : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D e)
 	{
-		if(e.gameObject.tag == "LeftWall")
+		if(e.gameObject.tag == "leftWall")
 		{
 			Collider.Destroy(this.gameObject);
 		}

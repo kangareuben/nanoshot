@@ -13,8 +13,11 @@ public class GameHandler : MonoBehaviour {
 
 	public Transform player;
 
+	public int score = 0;
+
 	// Private variables
 	private float _borderWidth = 1f;
+	private GUIText _scoreText;
 
 	// Use this for initialization
 	void Start () {
@@ -31,10 +34,12 @@ public class GameHandler : MonoBehaviour {
 		rightWall.size = new Vector2( _borderWidth, mainCam.ScreenToWorldPoint( new Vector3(0f, Screen.height * 2f, 0f)).y);
 		rightWall.center = new Vector2( mainCam.ScreenToWorldPoint( new Vector3(Screen.width, 0f, 0f)).x + (_borderWidth*2), 0f);
 
+		_scoreText = (GUIText)FindObjectOfType(typeof(GUIText));
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		// Update score text
+		_scoreText.text = "Score: " + score;
 	}
 }

@@ -56,11 +56,7 @@
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
      <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Light.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
-<<<<<<< HEAD
  <HintPath>C:/Users/Reuben Brenner-Adams/Documents/GitHub/nanoshot/Nanoshot/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
-=======
- <HintPath>C:/Users/Cole/Documents/GitHub/nanoshot/Nanoshot/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
->>>>>>> origin/master
  </Reference>
   </ItemGroup>
   <ItemGroup>
