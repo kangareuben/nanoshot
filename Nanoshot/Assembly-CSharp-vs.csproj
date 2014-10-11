@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BackgroundScript.cs" />
      <Compile Include="Assets\Scripts\BulletControl.cs" />
      <Compile Include="Assets\Scripts\EnemyControlOne.cs" />
      <Compile Include="Assets\Scripts\GameHandler.cs" />
@@ -56,7 +57,7 @@
      <None Include="Assets\Standard Assets\Skyboxes\_skybox info.txt" />
      <None Include="Assets\Standard Assets\Projectors\Sources\Shaders\Projector Light.shader" />
  <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>C:/Users/Reuben Brenner-Adams/Documents/GitHub/nanoshot/Nanoshot/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ <HintPath>C:/Users/Steven/Documents/GitHub/nanoshot/Nanoshot/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
