@@ -120,6 +120,13 @@ public class PlayerController : MonoBehaviour {
 			this.lives--;
 			_gameHandler.score--;
 		}
+
+		if(e.gameObject.tag == "powerup"){
+			PowerupController powerupScript = e.gameObject.GetComponent<PowerupController>();
+			weaponType = powerupScript.powerupType;
+			Debug.Log (powerupScript.powerupType);
+			Collider.Destroy(e.gameObject);
+		}
 	}
 
 	/*

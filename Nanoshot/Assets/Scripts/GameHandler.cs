@@ -16,20 +16,30 @@ public class GameHandler : MonoBehaviour {
 	public int score = 0;
 	public float chanceForEnemySpawn;
 
+	public float chanceForTripleShotSpawn;
+	public float chanceForQuintupleShotSpawn;
+
 	// Private variables
 	private float _borderWidth = 1f;
 	private GUIText _scoreText;
 
 	private Object _enemyOnePrefab;
 
+	private Object _powerUp1;
+	private Object _powerUp2;
+
 	private PlayerController _playerScript;
-	private float _spawnCooldown;
+	private float _spawnEnemyCooldown;
+	private float _spawnPowerupCooldown;
 
 	// Use this for initialization
 	void Start () {
 
 		// Load assets
 		_enemyOnePrefab = Resources.Load("Prefabs/EnemyOne");
+
+		_powerUp1 = Resources.Load ("Prefabs/powerup1");
+		_powerUp2 = Resources.Load ("Prefabs/powerup2");
 
 		// Initalize level
 		topWall.size = new Vector2( mainCam.ScreenToWorldPoint( new Vector3(Screen.width * 2f, 0f, 0f)).x, _borderWidth);
@@ -56,9 +66,11 @@ public class GameHandler : MonoBehaviour {
 		// Update score text
 
 		spawnEnemies ();
+		spawnPowerups();
 		_scoreText.text = "Score: " + score;
 
-		_spawnCooldown++;
+		_spawnEnemyCooldown++;
+		_spawnPowerupCooldown++;
 
 		if(player != null){
 			if(_playerScript.lives <= 0){
@@ -70,11 +82,11 @@ public class GameHandler : MonoBehaviour {
 	}
 
 	/*
-	 * Spawns enemies given a chance
+	 * Spawns enemies with given chance
 	 */
 	void spawnEnemies(){
 
-		if(_spawnCooldown > 30){
+		if(_spawnEnemyCooldown > 30){
 			float rand = Random.Range(0, 100);
 
 			if(rand < chanceForEnemySpawn){
@@ -82,7 +94,25 @@ public class GameHandler : MonoBehaviour {
 
 			}
 
-			_spawnCooldown = 0;
+			_spawnEnemyCooldown = 0;
+		}
+	}
+
+	/*
+	 * Spawns powerups with specific chances
+	 */
+	void spawnPowerups(){
+		if(_spawnPowerupCooldown > 30){
+			float rand1 = Random.Range(0, 100);
+			float rand2 = Random.Range(0, 100);
+			
+			if(rand1 < chanceForTripleShotSpawn){
+				Instantiate (_powerUp1, new Vector3(Random.Range(-2, 7), 4.5f, 0), transform.rotation);
+			} else if(rand2 < chanceForQuintupleShotSpawn){
+				Instantiate (_powerUp2, new Vector3(Random.Range(-2, 7), 4.5f, 0), transform.rotation);
+			}
+			
+			_spawnPowerupCooldown = 0;
 		}
 	}
 }
