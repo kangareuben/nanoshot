@@ -86,7 +86,7 @@ public class GameHandler : MonoBehaviour {
 	 */
 	void spawnEnemies(){
 
-		if(_spawnEnemyCooldown > 30){
+		if(_spawnEnemyCooldown > 60){
 			float rand = Random.Range(0, 100);
 
 			if(rand < chanceForEnemySpawn){
@@ -102,7 +102,7 @@ public class GameHandler : MonoBehaviour {
 	 * Spawns powerups with specific chances
 	 */
 	void spawnPowerups(){
-		if(_spawnPowerupCooldown > 30){
+		if(_spawnPowerupCooldown > 60){
 			float rand1 = Random.Range(0, 100);
 			float rand2 = Random.Range(0, 100);
 			

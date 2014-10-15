@@ -23,7 +23,7 @@ public class EnemyControlOne : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float velY = 0.0f;
-		velY += Mathf.Sin(Time.time * 3f) * 6;
+		velY += Mathf.Sin(Time.time * 3f + Random.Range (-2, 2)) * 6;
 		rigidbody2D.velocity = new Vector3(-speed, velY, 0);
 		timeUntilFire--;
 		if (timeUntilFire == 0) {
