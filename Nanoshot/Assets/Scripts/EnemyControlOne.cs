@@ -7,6 +7,7 @@ public class EnemyControlOne : MonoBehaviour {
 	public int timeUntilFire;
 
 	private Object _bullet;
+	private float _random;
 	private BulletControl _bulletScript;
 	private BoxCollider2D _collider;
 
@@ -17,13 +18,14 @@ public class EnemyControlOne : MonoBehaviour {
 		GameObject bulletObject = (GameObject)_bullet;
 		_collider = bulletObject.GetComponent<BoxCollider2D>();
 		_bulletScript = bulletObject.GetComponent<BulletControl>();
+		_random = Random.Range (0, 2 * Mathf.PI);
 		timeUntilFire = (int)Random.Range(120,240);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float velY = 0.0f;
-		velY += Mathf.Sin(Time.time * 3f + Random.Range (-2, 2)) * 6;
+		float velY = 0;
+		velY += Mathf.Sin((Time.time + _random) * 3f) * 6;
 		rigidbody2D.velocity = new Vector3(-speed, velY, 0);
 		timeUntilFire--;
 		if (timeUntilFire == 0) {
