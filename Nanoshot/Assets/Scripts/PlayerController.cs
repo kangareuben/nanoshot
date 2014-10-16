@@ -156,7 +156,6 @@ public class PlayerController : MonoBehaviour {
 	 * Fires single bullet straight
 	 */
 	void smallGunShoot(){
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = 0;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
 	}
@@ -165,13 +164,10 @@ public class PlayerController : MonoBehaviour {
 	 * Fires three bullets in a spread
 	 */
 	void medGunShoot(){
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = 2;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.4f, 0f), Quaternion.Euler (0, 0, 16));
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = 0;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = -2;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0f), Quaternion.Euler (0, 0, -16));
 
@@ -182,19 +178,14 @@ public class PlayerController : MonoBehaviour {
 	 * Fires five bullets in a spread
 	 */
 	void largeGunShoot(){
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = 2.5f;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.5f, 0f), Quaternion.Euler (0, 0, 24));
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = 1.25f;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.3f, 0f), Quaternion.Euler (0, 0, 12));
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = 0;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = -1.25f;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.1f, 0f), Quaternion.Euler (0, 0, -12));
-		_bulletScript.speedX = 4;
 		_bulletScript.speedY = -2.5f;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y - 0.1f, 0f), Quaternion.Euler (0, 0, -24));
 
