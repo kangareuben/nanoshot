@@ -22,6 +22,9 @@ public class GameHandler : MonoBehaviour {
 	// Private variables
 	private float _borderWidth = 1f;
 	private GUIText _scoreText;
+	private GUIText _ammoText;
+	private GUIText _livesText;
+	private GUIText _weaponText;
 
 	private Object _powerUp1;
 	private Object _powerUp2;
@@ -51,6 +54,9 @@ public class GameHandler : MonoBehaviour {
 		rightWall.center = new Vector2( mainCam.ScreenToWorldPoint( new Vector3(Screen.width, 0f, 0f)).x + (_borderWidth*2), 0f);
 
 		_scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<GUIText>();
+		_ammoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<GUIText>();
+		_livesText = GameObject.FindGameObjectWithTag("LivesText").GetComponent<GUIText>();
+		_weaponText = GameObject.FindGameObjectWithTag("WeaponText").GetComponent<GUIText>();
 
 		player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
 		_playerScript = player.gameObject.GetComponent<PlayerController>();
@@ -64,6 +70,25 @@ public class GameHandler : MonoBehaviour {
 		spawnEnemies ();
 		spawnPowerups();
 		_scoreText.text = "Score: " + score;
+
+		if(_playerScript.weaponType == 0)
+		{
+			_weaponText.text = "Weapon Type: Single Shot";
+			_ammoText.text = "Shots Remaining: Unlimited";
+		}
+		else if(_playerScript.weaponType == 1)
+		{
+			_weaponText.text = "Weapon Type: 3 Shot Spread";
+			_ammoText.text = "Shots Remaining: " + _playerScript.tripleShotAmmo;
+		}
+		else if(_playerScript.weaponType == 2)
+		{
+			_weaponText.text = "Weapon Type: 5 Shot Spread";
+			_ammoText.text = "Shots Remaining: " + _playerScript.quintShotAmmo;
+		}
+
+		_livesText.text = "Lives Remaining: " + _playerScript.lives;
+
 
 		_spawnEnemyCooldown++;
 		_spawnPowerupCooldown++;
