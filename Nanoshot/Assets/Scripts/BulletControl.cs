@@ -37,8 +37,12 @@ public class BulletControl : MonoBehaviour {
 		} 
 		else if (e.gameObject.tag == "Player" && this.gameObject.tag == "EnemyBullet") {
 			Collider.Destroy (this.gameObject);
-			_gameHandler.score--;
-			_playerController.lives--;
+			if(_playerController.invulnerable <= 0)
+			{
+				_playerController.invulnerable = 300;
+				_gameHandler.score--;
+				_playerController.lives--;
+			}
 
 		}
 		else if(e.gameObject.tag == "Border" || e.gameObject.tag == "leftWall"){

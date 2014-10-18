@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour {
 	// Rate the player can shoot
 	public float shotsPerSecond;
 
+	//Timer for player invulnerability
+	public int invulnerable;
 
 	// Private variables
 	private const float _fireRate = 1f/60f;
@@ -130,6 +132,11 @@ public class PlayerController : MonoBehaviour {
 		// Update variables
 		_shotDelay += _fireRate;
 		rigidbody2D.velocity = new Vector3(velX, velY, 0);
+
+		invulnerable--;
+		if (invulnerable < 0) {
+			invulnerable = 0;
+		}
 	}
 
 	/*
@@ -138,8 +145,12 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D e){
 		if(e.gameObject.tag == "Enemy"){
 			Collider.Destroy (e.gameObject);
-			this.lives--;
-			_gameHandler.score--;
+			if(invulnerable <= 0)
+			{
+				invulnerable = 300;
+				this.lives--;
+				_gameHandler.score--;
+			}
 		}
 
 		if(e.gameObject.tag == "powerup"){

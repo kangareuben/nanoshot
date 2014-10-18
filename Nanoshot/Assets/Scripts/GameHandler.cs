@@ -12,7 +12,7 @@ public class GameHandler : MonoBehaviour {
 	public BoxCollider2D rightWall;
 
 	public Transform player;
-
+	public int previousLives;
 	public int score = 0;
 	public float chanceForEnemySpawn;
 
@@ -61,6 +61,7 @@ public class GameHandler : MonoBehaviour {
 		player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
 		_playerScript = player.gameObject.GetComponent<PlayerController>();
 
+		previousLives = _playerScript.lives;
 	}
 	
 	// Update is called once per frame
@@ -94,6 +95,11 @@ public class GameHandler : MonoBehaviour {
 		_spawnPowerupCooldown++;
 
 		if(player != null){
+			if(_playerScript.lives > 0 && previousLives < _playerScript.lives)
+			{
+				//player.position = new Vector3(.1f,.1f,0f);
+				previousLives = _playerScript.lives;
+			}
 			if(_playerScript.lives <= 0){
 				Debug.Log ("You died");
 
