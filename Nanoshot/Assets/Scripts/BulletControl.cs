@@ -41,7 +41,7 @@ public class BulletControl : MonoBehaviour {
 			_playerController.lives--;
 
 		}
-		else if(e.gameObject.tag == "Border"){
+		else if(e.gameObject.tag == "Border" || e.gameObject.tag == "leftWall"){
 			Collider.Destroy(this.gameObject);
 		}
 	}
