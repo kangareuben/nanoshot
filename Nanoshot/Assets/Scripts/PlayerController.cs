@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour {
 
 	private GameHandler _gameHandler;
 
+	private GameObject soundHolder;
+	private Component[] audioSources;
+	private AudioSource backgroundMusic;
+	private AudioSource shootSoundEffect;
+
 	// Use this for initialization
 	void Start () {
 		// Load assets
@@ -51,6 +56,11 @@ public class PlayerController : MonoBehaviour {
 		_bulletScript = bulletObject.GetComponent<BulletControl>();
 
 		_gameHandler = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameHandler>();
+
+		soundHolder = GameObject.Find("SoundHolder");
+		audioSources = soundHolder.GetComponents(typeof(AudioSource));
+		backgroundMusic = (AudioSource)audioSources[0];
+		shootSoundEffect = (AudioSource)audioSources[1];
 
 		weaponType = 0;
 
@@ -158,6 +168,9 @@ public class PlayerController : MonoBehaviour {
 	void smallGunShoot(){
 		_bulletScript.speedY = 0;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
+
+		shootSoundEffect.volume = .5f;
+		shootSoundEffect.Play();
 	}
 
 	/*
@@ -172,6 +185,9 @@ public class PlayerController : MonoBehaviour {
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0f), Quaternion.Euler (0, 0, -16));
 
 		_tripleShotAmmo -= 3;
+
+		shootSoundEffect.volume = .75f;
+		shootSoundEffect.Play();
 	}
 
 	/*
@@ -190,5 +206,8 @@ public class PlayerController : MonoBehaviour {
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y - 0.1f, 0f), Quaternion.Euler (0, 0, -24));
 
 		_quintShotAmmo -= 5;
+
+		shootSoundEffect.volume = 1;
+		shootSoundEffect.Play();
 	}
 }
