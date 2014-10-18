@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour {
 	private BulletControl _bulletScript;
 	private BoxCollider2D _collider;
 
-	private int _tripleShotAmmo = 0;
-	private int _quintShotAmmo = 0;
+	public int tripleShotAmmo = 0;
+	public int quintShotAmmo = 0;
 
 	private GameHandler _gameHandler;
 
@@ -106,10 +106,10 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		// Check for ammo
-		if(weaponType == 1 && _tripleShotAmmo == 0){
+		if(weaponType == 1 && tripleShotAmmo == 0){
 			weaponType = 0;
 		}
-		if(weaponType == 2 && _quintShotAmmo == 0){
+		if(weaponType == 2 && quintShotAmmo == 0){
 			weaponType = 0;
 		}
 
@@ -147,8 +147,8 @@ public class PlayerController : MonoBehaviour {
 			weaponType = powerupScript.powerupType;
 
 			switch(powerupScript.powerupType){
-				case 1: _tripleShotAmmo = 30; break;
-				case 2: _quintShotAmmo = 30; break;
+				case 1: tripleShotAmmo = 30; break;
+				case 2: quintShotAmmo = 30; break;
 			}
 
 			Collider.Destroy(e.gameObject);
@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour {
 		_bulletScript.speedY = -2;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0f), Quaternion.Euler (0, 0, -16));
 
-		_tripleShotAmmo -= 3;
+		tripleShotAmmo -= 3;
 
 		shootSoundEffect.volume = .75f;
 		shootSoundEffect.Play();
@@ -205,7 +205,7 @@ public class PlayerController : MonoBehaviour {
 		_bulletScript.speedY = -2.5f;
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y - 0.1f, 0f), Quaternion.Euler (0, 0, -24));
 
-		_quintShotAmmo -= 5;
+		quintShotAmmo -= 5;
 
 		shootSoundEffect.volume = 1;
 		shootSoundEffect.Play();
