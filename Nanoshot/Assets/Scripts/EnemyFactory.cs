@@ -27,4 +27,11 @@ public class EnemyFactory : MonoBehaviour {
 		return e;
 	}
 
+	public static EnemyControlTwo SpawnEnemyDendrite(float x, float y, float s){
+		GameObject b = Object.Instantiate (instance.EnemyDendritePrefab, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
+		EnemyControlTwo e = b.GetComponent<EnemyControlTwo>();
+		e.speed = s;
+		return e;
+	}
+
 }

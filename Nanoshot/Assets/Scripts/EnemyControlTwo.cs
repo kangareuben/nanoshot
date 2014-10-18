@@ -12,6 +12,9 @@ public class EnemyControlTwo : MonoBehaviour {
 	private PlayerController _playerScript;
 	private BoxCollider2D _collider;
 
+	private int _rotDirection;
+	private int _rotSpeed;
+
 	// Use this for initialization
 	void Start () {
 		//CHANGE THE PREFAB, 
@@ -21,19 +24,27 @@ public class EnemyControlTwo : MonoBehaviour {
 		GameObject bulletObject = (GameObject)_bullet;
 		_collider = bulletObject.GetComponent<BoxCollider2D>();
 		_bulletScript = bulletObject.GetComponent<BulletControl>();
-		GameObject playerObject = GameObject.FindGameObjectWithTag ("Player");
-		_playerScript = playerObject.GetComponent<PlayerController>();
 		_random = Random.Range (0, 2 * Mathf.PI);
 		timeUntilFire = (int)Random.Range(60,120);
+
+		_rotSpeed = Random.Range (1, 2);
+
+		int t = Random.Range (0, 10);
+
+		if(t < 5){
+			_rotDirection = 1;
+		} else {
+			_rotDirection = -1;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		float velY = 0;
-		float velX = -1;
-		float zRotation = transform.rotation.z + 0.01f;
-		transform.Rotate (0, 0, 1);
-		rigidbody2D.velocity = new Vector3(-speed, velY, 0);
+		float velX = -speed;
+		float zRotation =  _rotSpeed * _rotDirection;
+		transform.Rotate (0, 0, zRotation);
+		rigidbody2D.velocity = new Vector3(velX, velY, 0);
 		timeUntilFire--;
 		if (timeUntilFire == 0) {
 			timeUntilFire = (int)Random.Range(60,180);

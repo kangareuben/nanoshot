@@ -87,6 +87,7 @@ public class GameHandler : MonoBehaviour {
 
 			if(rand < chanceForEnemySpawn){
 				EnemyFactory.SpawnEnemyOrb(12f, Random.Range(-2, 1));
+				EnemyFactory.SpawnEnemyDendrite(12f, Random.Range(-2, 1), 3);
 
 			}
 
