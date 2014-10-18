@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyControl2 : MonoBehaviour {
+public class EnemyControlTwo : MonoBehaviour {
 
 	public float speed;
 	public int timeUntilFire;
@@ -16,7 +16,7 @@ public class EnemyControl2 : MonoBehaviour {
 	void Start () {
 		//CHANGE THE PREFAB, 
 		//ENEMY 2 PROBABLY GETS ITS OWN BULLET IMAGE
-		_bullet = Resources.Load("Prefabs/EnemyBullet");
+		_bullet = Resources.Load("Prefabs/BulletTwo");
 		
 		GameObject bulletObject = (GameObject)_bullet;
 		_collider = bulletObject.GetComponent<BoxCollider2D>();
@@ -24,17 +24,19 @@ public class EnemyControl2 : MonoBehaviour {
 		GameObject playerObject = GameObject.FindGameObjectWithTag ("Player");
 		_playerScript = playerObject.GetComponent<PlayerController>();
 		_random = Random.Range (0, 2 * Mathf.PI);
-		timeUntilFire = (int)Random.Range(120,240);
+		timeUntilFire = (int)Random.Range(60,120);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		float velY = 0;
-		velY += Mathf.Sin((Time.time + _random) * 3f) * 6;
+		float velX = -1;
+		float zRotation = transform.rotation.z + 0.01f;
+		transform.Rotate (0, 0, 1);
 		rigidbody2D.velocity = new Vector3(-speed, velY, 0);
 		timeUntilFire--;
 		if (timeUntilFire == 0) {
-			timeUntilFire = (int)Random.Range(120,240);
+			timeUntilFire = (int)Random.Range(60,180);
 			Shoot();
 		}
 	}
@@ -54,9 +56,23 @@ public class EnemyControl2 : MonoBehaviour {
 	
 	void Shoot()
 	{
-		_bulletScript.speedX = -8;
-		//Use player's location to determine y velocity?
-		_bulletScript.speedY = 0;
-		Instantiate (_bullet, new Vector3(transform.position.x - .8f/*+ (_collider.transform.position.x/2 + 0.3f)*/, transform.position.y /*+ 0.2f*/, 0f), transform.rotation);
+		_bulletScript.speedX = 8 * Mathf.Cos (0 + transform.rotation.z);
+		_bulletScript.speedY = 8 * Mathf.Sin (0 + transform.rotation.z);
+		Instantiate (_bullet, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.Euler (0, 0, (180 / Mathf.PI) * (0 + transform.rotation.z)));
+		_bulletScript.speedX = 8 * Mathf.Cos (Mathf.PI / 3 + transform.rotation.z);
+		_bulletScript.speedY = 8 * Mathf.Sin (Mathf.PI / 3 + transform.rotation.z);
+		Instantiate (_bullet, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.Euler (0, 0, (180 / Mathf.PI) * (Mathf.PI / 3 + transform.rotation.z)));
+		_bulletScript.speedX = 8 * Mathf.Cos (2 * Mathf.PI / 3 + transform.rotation.z);
+		_bulletScript.speedY = 8 * Mathf.Sin (2 * Mathf.PI / 3 + transform.rotation.z);
+		Instantiate (_bullet, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.Euler (0, 0, (180 / Mathf.PI) * (2 * Mathf.PI / 3 + transform.rotation.z)));
+		_bulletScript.speedX = 8 * Mathf.Cos (3 * Mathf.PI / 3 + transform.rotation.z);
+		_bulletScript.speedY = 8 * Mathf.Sin (3 * Mathf.PI / 3 + transform.rotation.z);
+		Instantiate (_bullet, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.Euler (0, 0, (180 / Mathf.PI) * (3 * Mathf.PI / 3 + transform.rotation.z)));
+		_bulletScript.speedX = 8 * Mathf.Cos (4 * Mathf.PI / 3 + transform.rotation.z);
+		_bulletScript.speedY = 8 * Mathf.Sin (4 * Mathf.PI / 3 + transform.rotation.z);
+		Instantiate (_bullet, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.Euler (0, 0, (180 / Mathf.PI) * (4 * Mathf.PI / 3 + transform.rotation.z)));
+		_bulletScript.speedX = 8 * Mathf.Cos (5 * Mathf.PI / 3 + transform.rotation.z);
+		_bulletScript.speedY = 8 * Mathf.Sin (5 * Mathf.PI / 3 + transform.rotation.z);
+		Instantiate (_bullet, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.Euler (0, 0, (180 / Mathf.PI) * (5 * Mathf.PI / 3 + transform.rotation.z)));
 	}
 }
