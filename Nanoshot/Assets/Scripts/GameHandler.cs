@@ -23,8 +23,6 @@ public class GameHandler : MonoBehaviour {
 	private float _borderWidth = 1f;
 	private GUIText _scoreText;
 
-	private Object _enemyOnePrefab;
-
 	private Object _powerUp1;
 	private Object _powerUp2;
 
@@ -36,8 +34,6 @@ public class GameHandler : MonoBehaviour {
 	void Start () {
 
 		// Load assets
-		_enemyOnePrefab = Resources.Load("Prefabs/EnemyOne");
-
 		_powerUp1 = Resources.Load ("Prefabs/powerup1");
 		_powerUp2 = Resources.Load ("Prefabs/powerup2");
 
@@ -54,9 +50,9 @@ public class GameHandler : MonoBehaviour {
 		rightWall.size = new Vector2( _borderWidth, mainCam.ScreenToWorldPoint( new Vector3(0f, Screen.height * 2f, 0f)).y);
 		rightWall.center = new Vector2( mainCam.ScreenToWorldPoint( new Vector3(Screen.width, 0f, 0f)).x + (_borderWidth*2), 0f);
 
-		_scoreText = (GUIText)FindObjectOfType(typeof(GUIText));
+		_scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<GUIText>();
 
-		player.position = new Vector3(-9, 0, 0);
+		player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
 		_playerScript = player.gameObject.GetComponent<PlayerController>();
 
 	}
@@ -90,7 +86,7 @@ public class GameHandler : MonoBehaviour {
 			float rand = Random.Range(0, 100);
 
 			if(rand < chanceForEnemySpawn){
-				Instantiate (_enemyOnePrefab, new Vector3(12f, Random.Range(-2, 1), 0), transform.rotation);
+				EnemyFactory.SpawnEnemyOrb(12f, Random.Range(-2, 1));
 
 			}
 
