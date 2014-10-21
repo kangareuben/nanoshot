@@ -134,6 +134,14 @@ public class PlayerController : MonoBehaviour {
 		rigidbody2D.velocity = new Vector3(velX, velY, 0);
 
 		invulnerable--;
+		if(invulnerable > 0){
+			gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+			gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+		} else {
+			gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+			gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
+		}
+
 		if (invulnerable < 0) {
 			invulnerable = 0;
 		}
@@ -144,9 +152,12 @@ public class PlayerController : MonoBehaviour {
 	 */
 	void OnTriggerEnter2D(Collider2D e){
 		if(e.gameObject.tag == "Enemy"){
-			Collider.Destroy (e.gameObject);
+
 			if(invulnerable <= 0)
 			{
+				Collider.Destroy (e.gameObject);
+
+
 				invulnerable = 300;
 				this.lives--;
 				_gameHandler.score--;

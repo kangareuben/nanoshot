@@ -1,7 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
+enum GameState{
+	MAIN_MENU_SCREEN,
+	GAME_SCREEN,
+	GAME_OVER_SCREEN,
+	PAUSE_SCREEN
+};
 
 public class GameHandler : MonoBehaviour {
+
+	private GameState curState = GameState.MAIN_MENU_SCREEN;
 
 	// Public variables
 	public Camera mainCam;
@@ -32,6 +42,10 @@ public class GameHandler : MonoBehaviour {
 	private PlayerController _playerScript;
 	private float _spawnEnemyCooldown;
 	private float _spawnPowerupCooldown;
+
+	private List<GameObject> enemyList = new List<GameObject>();
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -66,46 +80,61 @@ public class GameHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// Update score text
 
-		spawnEnemies ();
-		spawnPowerups();
-		_scoreText.text = "Score: " + score;
-
-		if(_playerScript.weaponType == 0)
-		{
-			_weaponText.text = "Weapon Type: Single Shot";
-			_ammoText.text = "Shots Remaining: Unlimited";
+		switch(curState){
+			case GameState.MAIN_MENU_SCREEN: 
+				Vector3 temp = mainCam.transform.position;
+				temp.y = 16;
+				mainCam.transform.position = temp;
+				break;
+			case GameState.GAME_SCREEN: 
+				// Update score text
+				spawnEnemies ();
+				spawnPowerups();
+				_scoreText.text = "Score: " + score;
+				
+				if(_playerScript.weaponType == 0)
+				{
+					_weaponText.text = "Weapon Type: Single Shot";
+					_ammoText.text = "Shots Remaining: Unlimited";
+				}
+				else if(_playerScript.weaponType == 1)
+				{
+					_weaponText.text = "Weapon Type: 3 Shot Spread";
+					_ammoText.text = "Shots Remaining: " + _playerScript.tripleShotAmmo;
+				}
+				else if(_playerScript.weaponType == 2)
+				{
+					_weaponText.text = "Weapon Type: 5 Shot Spread";
+					_ammoText.text = "Shots Remaining: " + _playerScript.quintShotAmmo;
+				}
+				
+				_livesText.text = "Lives Remaining: " + _playerScript.lives;
+				
+				
+				_spawnEnemyCooldown++;
+				_spawnPowerupCooldown++;
+				
+				if(player != null){
+					if(_playerScript.lives > 0 && previousLives > _playerScript.lives)
+					{
+						previousLives = _playerScript.lives;
+						player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
+					}
+					if(_playerScript.lives <= 0){
+						Debug.Log ("You died");
+						
+						_playerScript.explode();
+					}
+				}
+				break;
+			case GameState.GAME_OVER_SCREEN: 
+				break;
+			case GameState.PAUSE_SCREEN: 
+				break;
+			default: break;
 		}
-		else if(_playerScript.weaponType == 1)
-		{
-			_weaponText.text = "Weapon Type: 3 Shot Spread";
-			_ammoText.text = "Shots Remaining: " + _playerScript.tripleShotAmmo;
-		}
-		else if(_playerScript.weaponType == 2)
-		{
-			_weaponText.text = "Weapon Type: 5 Shot Spread";
-			_ammoText.text = "Shots Remaining: " + _playerScript.quintShotAmmo;
-		}
 
-		_livesText.text = "Lives Remaining: " + _playerScript.lives;
-
-
-		_spawnEnemyCooldown++;
-		_spawnPowerupCooldown++;
-
-		if(player != null){
-			if(_playerScript.lives > 0 && previousLives < _playerScript.lives)
-			{
-				//player.position = new Vector3(.1f,.1f,0f);
-				previousLives = _playerScript.lives;
-			}
-			if(_playerScript.lives <= 0){
-				Debug.Log ("You died");
-
-				_playerScript.explode();
-			}
-		}
 	}
 
 	/*
@@ -117,8 +146,8 @@ public class GameHandler : MonoBehaviour {
 			float rand = Random.Range(0, 100);
 
 			if(rand < chanceForEnemySpawn){
-				EnemyFactory.SpawnEnemyOrb(12f, Random.Range(-2, 1));
-				EnemyFactory.SpawnEnemyDendrite(12f, Random.Range(-2, 1), 3);
+				enemyList.Add(EnemyFactory.SpawnEnemyOrb(12f, Random.Range(-2, 1)).gameObject);
+				enemyList.Add(EnemyFactory.SpawnEnemyDendrite(12f, Random.Range(-2, 1), 3).gameObject);
 
 			}
 
@@ -141,6 +170,12 @@ public class GameHandler : MonoBehaviour {
 			}
 			
 			_spawnPowerupCooldown = 0;
+		}
+	}
+
+	void resetGame(){
+		for(int i = 0; i < enemyList.Count; i++){
+
 		}
 	}
 }
