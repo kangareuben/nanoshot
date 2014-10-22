@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour {
 	private float _shotDelay;
 	private Object _bullet;
 	private BulletControl _bulletScript;
+	private SpriteRenderer _bulletRenderer;
 	private BoxCollider2D _collider;
 
 	public int tripleShotAmmo = 0;
@@ -45,23 +46,29 @@ public class PlayerController : MonoBehaviour {
 
 	private GameObject soundHolder;
 	private Component[] audioSources;
-	private AudioSource backgroundMusic;
 	private AudioSource shootSoundEffect;
 
+	private Sprite[] _bulletSprites = new Sprite[5];
 	// Use this for initialization
 	void Start () {
 		// Load assets
 		_bullet = Resources.Load("Prefabs/bullet");
 
+		_bulletSprites[0] = Resources.Load<Sprite>("Placeholder art/Player Bullet");
+		_bulletSprites[1] = Resources.Load<Sprite>("Placeholder art/Player Bullet Blueish");
+		_bulletSprites[2] = Resources.Load<Sprite>("Placeholder art/Player Bullet Green");
+		_bulletSprites[3] = Resources.Load<Sprite>("Placeholder art/Player Bullet Lighter");
+		_bulletSprites[4] = Resources.Load<Sprite>("Placeholder art/Player BulletYP");
+
 		GameObject bulletObject = (GameObject)_bullet;
 		_collider = GetComponent<BoxCollider2D>();
 		_bulletScript = bulletObject.GetComponent<BulletControl>();
+		_bulletRenderer = bulletObject.GetComponent<SpriteRenderer>();
 
 		_gameHandler = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameHandler>();
 
 		soundHolder = GameObject.Find("SoundHolder");
 		audioSources = soundHolder.GetComponents(typeof(AudioSource));
-		backgroundMusic = (AudioSource)audioSources[0];
 		shootSoundEffect = (AudioSource)audioSources[1];
 
 		weaponType = 0;
@@ -189,6 +196,7 @@ public class PlayerController : MonoBehaviour {
 	 */
 	void smallGunShoot(){
 		_bulletScript.speedY = 0;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
 
 		shootSoundEffect.volume = .5f;
@@ -200,10 +208,13 @@ public class PlayerController : MonoBehaviour {
 	 */
 	void medGunShoot(){
 		_bulletScript.speedY = 2;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.4f, 0f), Quaternion.Euler (0, 0, 16));
 		_bulletScript.speedY = 0;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
 		_bulletScript.speedY = -2;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0f), Quaternion.Euler (0, 0, -16));
 
 		tripleShotAmmo -= 3;
@@ -217,19 +228,39 @@ public class PlayerController : MonoBehaviour {
 	 */
 	void largeGunShoot(){
 		_bulletScript.speedY = 2.5f;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.5f, 0f), Quaternion.Euler (0, 0, 24));
 		_bulletScript.speedY = 1.25f;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.3f, 0f), Quaternion.Euler (0, 0, 12));
 		_bulletScript.speedY = 0;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
 		_bulletScript.speedY = -1.25f;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.1f, 0f), Quaternion.Euler (0, 0, -12));
 		_bulletScript.speedY = -2.5f;
+		_bulletRenderer.sprite = randomBullet ();
 		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y - 0.1f, 0f), Quaternion.Euler (0, 0, -24));
 
 		quintShotAmmo -= 5;
 
 		shootSoundEffect.volume = 1;
 		shootSoundEffect.Play();
+	}
+
+	Sprite randomBullet(){
+		Sprite bul = null;
+
+		int rand = Random.Range (0, 4);
+		switch(rand){
+			case 0: bul = _bulletSprites[0]; break;
+			case 1: bul = _bulletSprites[1];break;
+			case 2: bul = _bulletSprites[2];break;
+			case 3: bul = _bulletSprites[3];break;
+			case 4: bul = _bulletSprites[4];break;
+			default: bul = _bulletSprites[0];break;
+		}
+		return bul;
 	}
 }

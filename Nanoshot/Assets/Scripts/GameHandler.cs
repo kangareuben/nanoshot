@@ -11,7 +11,7 @@ enum GameState{
 
 public class GameHandler : MonoBehaviour {
 
-	private GameState curState = GameState.MAIN_MENU_SCREEN;
+	private GameState curState = GameState.GAME_SCREEN;
 
 	// Public variables
 	public Camera mainCam;
