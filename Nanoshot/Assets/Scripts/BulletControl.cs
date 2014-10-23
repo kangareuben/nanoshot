@@ -26,6 +26,10 @@ public class BulletControl : MonoBehaviour {
 		{
 			//Other movement
 		}
+
+		if(_gameHandler.isGame){
+			Destroy(this.gameObject);
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D e){

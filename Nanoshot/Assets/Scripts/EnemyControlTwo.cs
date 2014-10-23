@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyControlTwo : MonoBehaviour {
 
 	public float speed;
 	public int timeUntilFire;
+	public List<GameObject> bulletList = new List<GameObject>();
 	
 	private Object _bullet;
 	private float _random;
@@ -59,12 +61,6 @@ public class EnemyControlTwo : MonoBehaviour {
 			Collider.Destroy(this.gameObject);
 		}
 	}
-	
-	void OnDestroy()
-	{
-		
-	}
-	
 	void Shoot()
 	{
 		_bulletScript.speedX = 8 * Mathf.Cos (0 + transform.rotation.z);
@@ -85,5 +81,12 @@ public class EnemyControlTwo : MonoBehaviour {
 		_bulletScript.speedX = 8 * Mathf.Cos (5 * Mathf.PI / 3 + transform.rotation.z);
 		_bulletScript.speedY = 8 * Mathf.Sin (5 * Mathf.PI / 3 + transform.rotation.z);
 		Instantiate (_bullet, new Vector3(transform.position.x, transform.position.y, 0f), Quaternion.Euler (0, 0, (180 / Mathf.PI) * (5 * Mathf.PI / 3 + transform.rotation.z)));
+	}
+
+	void OnDestroy()
+	{
+		for (int i = 0; i < bulletList.Count; i++) {
+			Collider.Destroy(bulletList[i]);
+		}
 	}
 }

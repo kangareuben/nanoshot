@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EnemyControlOne : MonoBehaviour {
 
 	public float speed;
 	public int timeUntilFire;
+	public List<GameObject> bulletList = new List<GameObject>();
 
 	private Object _bullet;
 	private float _random;
@@ -44,13 +46,18 @@ public class EnemyControlOne : MonoBehaviour {
 
 	void OnDestroy()
 	{
-
+		for (int i = 0; i < bulletList.Count; i++) {
+			Collider.Destroy(bulletList[i].gameObject);
+		}
 	}
+
+
 
 	void Shoot()
 	{
 		_bulletScript.speedX = -8;
 		_bulletScript.speedY = 0;
-		Instantiate (_bullet, new Vector3(transform.position.x - .8f/*+ (_collider.transform.position.x/2 + 0.3f)*/, transform.position.y /*+ 0.2f*/, 0f), transform.rotation);
+		GameObject b = Instantiate (_bullet, new Vector3(transform.position.x - .8f/*+ (_collider.transform.position.x/2 + 0.3f)*/, transform.position.y /*+ 0.2f*/, 0f), transform.rotation) as GameObject;
+		bulletList.Add(b);
 	}
 }

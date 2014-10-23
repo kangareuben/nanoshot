@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
 
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour {
 	//Weapon type
 	public int weaponType;
 
+	public List<GameObject> bulletList = new List<GameObject>();
+
 	// Rate the player can shoot
 	public float shotsPerSecond;
 
@@ -45,7 +48,6 @@ public class PlayerController : MonoBehaviour {
 
 	private GameObject soundHolder;
 	private Component[] audioSources;
-	private AudioSource backgroundMusic;
 	private AudioSource shootSoundEffect;
 
 	// Use this for initialization
@@ -61,7 +63,6 @@ public class PlayerController : MonoBehaviour {
 
 		soundHolder = GameObject.Find("SoundHolder");
 		audioSources = soundHolder.GetComponents(typeof(AudioSource));
-		backgroundMusic = (AudioSource)audioSources[0];
 		shootSoundEffect = (AudioSource)audioSources[1];
 
 		weaponType = 0;
@@ -157,7 +158,6 @@ public class PlayerController : MonoBehaviour {
 			{
 				Collider.Destroy (e.gameObject);
 
-
 				invulnerable = 300;
 				this.lives--;
 				_gameHandler.score--;
@@ -189,8 +189,8 @@ public class PlayerController : MonoBehaviour {
 	 */
 	void smallGunShoot(){
 		_bulletScript.speedY = 0;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
-
+		GameObject b = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
+		bulletList.Add(b);
 		shootSoundEffect.volume = .5f;
 		shootSoundEffect.Play();
 	}
@@ -200,11 +200,15 @@ public class PlayerController : MonoBehaviour {
 	 */
 	void medGunShoot(){
 		_bulletScript.speedY = 2;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.4f, 0f), Quaternion.Euler (0, 0, 16));
+		GameObject b1 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.4f, 0f), Quaternion.Euler (0, 0, 16)) as GameObject;
 		_bulletScript.speedY = 0;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
+		GameObject b2 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
 		_bulletScript.speedY = -2;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0f), Quaternion.Euler (0, 0, -16));
+		GameObject b3 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0f), Quaternion.Euler (0, 0, -16)) as GameObject;
+
+		bulletList.Add(b1);
+		bulletList.Add(b2);
+		bulletList.Add(b3);
 
 		tripleShotAmmo -= 3;
 
@@ -217,15 +221,21 @@ public class PlayerController : MonoBehaviour {
 	 */
 	void largeGunShoot(){
 		_bulletScript.speedY = 2.5f;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.5f, 0f), Quaternion.Euler (0, 0, 24));
+		GameObject b1 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.5f, 0f), Quaternion.Euler (0, 0, 24)) as GameObject;
 		_bulletScript.speedY = 1.25f;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.3f, 0f), Quaternion.Euler (0, 0, 12));
+		GameObject b2 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.3f, 0f), Quaternion.Euler (0, 0, 12)) as GameObject;
 		_bulletScript.speedY = 0;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0));
+		GameObject b3 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
 		_bulletScript.speedY = -1.25f;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.1f, 0f), Quaternion.Euler (0, 0, -12));
+		GameObject b4 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.1f, 0f), Quaternion.Euler (0, 0, -12)) as GameObject;
 		_bulletScript.speedY = -2.5f;
-		Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y - 0.1f, 0f), Quaternion.Euler (0, 0, -24));
+		GameObject b5 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y - 0.1f, 0f), Quaternion.Euler (0, 0, -24)) as GameObject;
+
+		bulletList.Add(b1);
+		bulletList.Add(b2);
+		bulletList.Add(b3);
+		bulletList.Add(b4);
+		bulletList.Add(b5);
 
 		quintShotAmmo -= 5;
 

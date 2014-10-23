@@ -16,6 +16,12 @@ public class GameHandler : MonoBehaviour {
 	// Public variables
 	public Camera mainCam;
 
+	// Keycode for starting and restarting the game - "enter"
+	public KeyCode restartGame;
+	public KeyCode pauseGame;
+
+	public int pauseCooldown;
+
 	public BoxCollider2D topWall;
 	public BoxCollider2D bottomWall;
 	public BoxCollider2D leftWall;
@@ -25,6 +31,7 @@ public class GameHandler : MonoBehaviour {
 	public int previousLives;
 	public int score = 0;
 	public float chanceForEnemySpawn;
+	public bool isGame = false;
 
 	public float chanceForTripleShotSpawn;
 	public float chanceForQuintupleShotSpawn;
@@ -35,17 +42,24 @@ public class GameHandler : MonoBehaviour {
 	private GUIText _ammoText;
 	private GUIText _livesText;
 	private GUIText _weaponText;
+	private GUIText _pauseText;
+
 
 	private Object _powerUp1;
 	private Object _powerUp2;
+	private object _playerPrefab;
 
 	private PlayerController _playerScript;
 	private float _spawnEnemyCooldown;
 	private float _spawnPowerupCooldown;
 
 	private List<GameObject> enemyList = new List<GameObject>();
+	private List<GameObject> enemyBulletList = new List<GameObject>();
+	private List<GameObject> playerBulletList = new List<GameObject>();
 
-
+	private GameObject soundHolder;
+	private Component[] audioSources;
+	private AudioSource backgroundMusic;
 
 	// Use this for initialization
 	void Start () {
@@ -53,6 +67,7 @@ public class GameHandler : MonoBehaviour {
 		// Load assets
 		_powerUp1 = Resources.Load ("Prefabs/powerup1");
 		_powerUp2 = Resources.Load ("Prefabs/powerup2");
+		_playerPrefab = Resources.Load("Prefabs/Player");
 
 		// Initalize level
 		topWall.size = new Vector2( mainCam.ScreenToWorldPoint( new Vector3(Screen.width * 2f, 0f, 0f)).x, _borderWidth);
@@ -71,11 +86,16 @@ public class GameHandler : MonoBehaviour {
 		_ammoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<GUIText>();
 		_livesText = GameObject.FindGameObjectWithTag("LivesText").GetComponent<GUIText>();
 		_weaponText = GameObject.FindGameObjectWithTag("WeaponText").GetComponent<GUIText>();
+		_pauseText = GameObject.FindGameObjectWithTag("PauseText").GetComponent<GUIText>();
 
 		player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
 		_playerScript = player.gameObject.GetComponent<PlayerController>();
 
 		previousLives = _playerScript.lives;
+
+		soundHolder = GameObject.Find("SoundHolder");
+		audioSources = soundHolder.GetComponents(typeof(AudioSource));
+		backgroundMusic = (AudioSource)audioSources[0];
 	}
 	
 	// Update is called once per frame
@@ -83,16 +103,32 @@ public class GameHandler : MonoBehaviour {
 
 		switch(curState){
 			case GameState.MAIN_MENU_SCREEN: 
-				Vector3 temp = mainCam.transform.position;
-				temp.y = 16;
-				mainCam.transform.position = temp;
+				
+				if(Input.GetKey(restartGame))
+				{
+					curState = GameState.GAME_SCREEN;
+				}
+
+				Vector3 tempStart = mainCam.transform.position;
+				tempStart.y = 16;
+				mainCam.transform.position = tempStart;
+				soundHolder.transform.position = tempStart;
 				break;
 			case GameState.GAME_SCREEN: 
+				isGame = false;
+				_pauseText.text = "";
+				pauseCooldown++;
 				// Update score text
 				spawnEnemies ();
 				spawnPowerups();
 				_scoreText.text = "Score: " + score;
 				
+			if(Input.GetKey(pauseGame) && pauseCooldown > 50)
+				{
+					curState = GameState.PAUSE_SCREEN;
+					pauseCooldown = 0;
+				}
+
 				if(_playerScript.weaponType == 0)
 				{
 					_weaponText.text = "Weapon Type: Single Shot";
@@ -124,13 +160,48 @@ public class GameHandler : MonoBehaviour {
 					if(_playerScript.lives <= 0){
 						Debug.Log ("You died");
 						
-						_playerScript.explode();
+						//_playerScript.explode();
+						player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
+
+
+						curState = GameState.GAME_OVER_SCREEN;
 					}
+				}				
+				// set camera to game screen
+				Vector3 tempMain = mainCam.transform.position;
+				tempMain.y = 0;
+				mainCam.transform.position = tempMain;
+				soundHolder.transform.position = tempMain;
+				break;
+			case GameState.GAME_OVER_SCREEN:
+				isGame = true;
+
+				if(Input.GetKey(restartGame))
+				{
+					curState = GameState.GAME_SCREEN;
+					// reset game
+					resetGame();
 				}
+
+				Vector3 tempGameOver = mainCam.transform.position;
+				tempGameOver.y = -16;
+				mainCam.transform.position = tempGameOver;
+				soundHolder.transform.position = tempGameOver;
+
+
 				break;
-			case GameState.GAME_OVER_SCREEN: 
-				break;
-			case GameState.PAUSE_SCREEN: 
+			case GameState.PAUSE_SCREEN:
+			pauseCooldown++;
+			_pauseText.text = "Pause";
+			Time.timeScale = 0;
+			if(Input.GetKey(pauseGame) && pauseCooldown > 50)
+			{
+				Time.timeScale = 1;
+				curState = GameState.GAME_SCREEN;
+				pauseCooldown = 0;
+
+									
+			}
 				break;
 			default: break;
 		}
@@ -174,8 +245,25 @@ public class GameHandler : MonoBehaviour {
 	}
 
 	void resetGame(){
-		for(int i = 0; i < enemyList.Count; i++){
 
+		for(int i = 0; i < enemyList.Count; i++){
+			Destroy(enemyList[i]);
 		}
+
+		resetPlayer();
+
+	
+}
+
+	void resetPlayer(){
+		for (int i = 0; i < _playerScript.bulletList.Count; i++) {
+			Destroy(_playerScript.bulletList[i]);
+		}
+		_playerScript.lives = 3;
+		_playerScript.invulnerable = 0;
+		score = 0;
+		//player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
+
+		//_playerScript.position
 	}
 }
