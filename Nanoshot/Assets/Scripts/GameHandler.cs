@@ -260,6 +260,7 @@ public class GameHandler : MonoBehaviour {
 			Destroy(_playerScript.bulletList[i]);
 		}
 		_playerScript.lives = 3;
+		previousLives = _playerScript.lives;
 		_playerScript.invulnerable = 0;
 		_playerScript.weaponType = 0;
 		_playerScript.tripleShotAmmo = 0;
