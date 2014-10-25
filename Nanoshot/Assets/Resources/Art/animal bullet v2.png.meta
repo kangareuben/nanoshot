@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 guid: e170698a79881c2418064e40ed69f514
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: animal bullet v2_0
+    21300002: animal bullet v2_1
+    21300004: animal bullet v2_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

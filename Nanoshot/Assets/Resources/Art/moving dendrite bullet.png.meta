@@ -1,6 +1,9 @@
 fileFormatVersion: 2
 guid: 5c4116c028b7d2c459b2f837fda92770
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: moving dendrite bullet_0
+    21300002: moving dendrite bullet_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
