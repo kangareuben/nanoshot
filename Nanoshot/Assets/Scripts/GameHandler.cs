@@ -235,9 +235,9 @@ public class GameHandler : MonoBehaviour {
 			float rand2 = Random.Range(0, 100);
 			
 			if(rand1 < chanceForTripleShotSpawn){
-				Instantiate (_powerUp1, new Vector3(Random.Range(-2, 7), 4.5f, 0), transform.rotation);
+				Instantiate (_powerUp1, new Vector3(20.0f, Random.Range(-2, 7), 0), transform.rotation);
 			} else if(rand2 < chanceForQuintupleShotSpawn){
-				Instantiate (_powerUp2, new Vector3(Random.Range(-2, 7), 4.5f, 0), transform.rotation);
+				Instantiate (_powerUp2, new Vector3(20.0f, Random.Range(-2, 7), 0), transform.rotation);
 			}
 			
 			_spawnPowerupCooldown = 0;
@@ -261,6 +261,9 @@ public class GameHandler : MonoBehaviour {
 		}
 		_playerScript.lives = 3;
 		_playerScript.invulnerable = 0;
+		_playerScript.weaponType = 0;
+		_playerScript.tripleShotAmmo = 0;
+		_playerScript.quintShotAmmo = 0;
 		score = 0;
 		//player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
 

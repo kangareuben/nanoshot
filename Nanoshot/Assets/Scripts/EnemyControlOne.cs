@@ -8,6 +8,7 @@ public class EnemyControlOne : MonoBehaviour {
 	public int timeUntilFire;
 	public List<GameObject> bulletList = new List<GameObject>();
 
+	private GameHandler _gameHandler;
 	private Object _bullet;
 	private float _random;
 	private BulletControl _bulletScript;
@@ -16,7 +17,8 @@ public class EnemyControlOne : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_bullet = Resources.Load("Prefabs/EnemyBullet");
-		
+		_gameHandler = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameHandler>();
+
 		GameObject bulletObject = (GameObject)_bullet;
 		_collider = bulletObject.GetComponent<BoxCollider2D>();
 		_bulletScript = bulletObject.GetComponent<BulletControl>();
@@ -34,6 +36,11 @@ public class EnemyControlOne : MonoBehaviour {
 			timeUntilFire = (int)Random.Range(120,240);
 			Shoot();
 		}
+		if(_gameHandler.isGame){
+			for (int i = 0; i < bulletList.Count; i++) {
+				Collider.Destroy(bulletList[i].gameObject);
+			}
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D e)
@@ -46,9 +53,7 @@ public class EnemyControlOne : MonoBehaviour {
 
 	void OnDestroy()
 	{
-		for (int i = 0; i < bulletList.Count; i++) {
-			Collider.Destroy(bulletList[i].gameObject);
-		}
+
 	}
 
 
