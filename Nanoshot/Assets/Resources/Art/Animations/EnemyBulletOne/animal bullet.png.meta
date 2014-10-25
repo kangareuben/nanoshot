@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5c4116c028b7d2c459b2f837fda92770
+guid: 3abec18d98fca8d4986f97e1cd3c987f
 TextureImporter:
   serializedVersion: 2
   mipmaps:
@@ -36,28 +36,68 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 25
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: moving dendrite bullet_0
+    - name: animal bullet_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 3
         y: 1
-        width: 15
-        height: 13
+        width: 9
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: moving dendrite bullet_1
+    - name: animal bullet_1
       rect:
         serializedVersion: 2
-        x: 18
+        x: 16
         y: 1
         width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: animal bullet_2
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: animal bullet_3
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 0
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: animal bullet_4
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 3
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: animal bullet_5
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 3
+        width: 12
         height: 12
       alignment: 0
       pivot: {x: 0, y: 0}

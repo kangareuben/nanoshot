@@ -57,11 +57,11 @@ public class PlayerController : MonoBehaviour {
 		// Load assets
 		_bullet = Resources.Load("Prefabs/bullet");
 
-		_bulletSprites[0] = Resources.Load<Sprite>("Placeholder art/Player Bullet");
-		_bulletSprites[1] = Resources.Load<Sprite>("Placeholder art/Player Bullet Blueish");
-		_bulletSprites[2] = Resources.Load<Sprite>("Placeholder art/Player Bullet Green");
-		_bulletSprites[3] = Resources.Load<Sprite>("Placeholder art/Player Bullet Lighter");
-		_bulletSprites[4] = Resources.Load<Sprite>("Placeholder art/Player BulletYP");
+		_bulletSprites[0] = Resources.Load<Sprite>("Art/pillbullet");
+		_bulletSprites[1] = Resources.Load<Sprite>("Art/pillbullet1");
+		_bulletSprites[2] = Resources.Load<Sprite>("Art/pillbullet2");
+		_bulletSprites[3] = Resources.Load<Sprite>("Art/pillbullet3");
+		_bulletSprites[4] = Resources.Load<Sprite>("Art/pillbullet4");
 
 		GameObject bulletObject = (GameObject)_bullet;
 		_collider = GetComponent<BoxCollider2D>();
@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour {
 	void smallGunShoot(){
 		_bulletScript.speedY = 0;
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
+		GameObject b = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.1f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
 		bulletList.Add(b);
 
 		shootSoundEffect.volume = .5f;
@@ -212,13 +212,13 @@ public class PlayerController : MonoBehaviour {
 	void medGunShoot(){
 		_bulletScript.speedY = 2;
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b1 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.4f, 0f), Quaternion.Euler (0, 0, 16)) as GameObject;
+		GameObject b1 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.15f, 0f), Quaternion.Euler (0, 0, 16)) as GameObject;
 		_bulletScript.speedY = 0;
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b2 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
+		GameObject b2 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.1f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
 		_bulletScript.speedY = -2;
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b3 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0f), Quaternion.Euler (0, 0, -16)) as GameObject;
+		GameObject b3 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0.05f), Quaternion.Euler (0, 0, -16)) as GameObject;
 
 		bulletList.Add(b1);
 		bulletList.Add(b2);
@@ -237,19 +237,19 @@ public class PlayerController : MonoBehaviour {
 		_bulletScript.speedY = 2.5f;
 
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b1 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.5f, 0f), Quaternion.Euler (0, 0, 24)) as GameObject;
+		GameObject b1 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 24)) as GameObject;
 		_bulletScript.speedY = 1.25f;
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b2 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.3f, 0f), Quaternion.Euler (0, 0, 12)) as GameObject;
+		GameObject b2 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.15f, 0f), Quaternion.Euler (0, 0, 12)) as GameObject;
 		_bulletScript.speedY = 0;
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b3 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.2f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
+		GameObject b3 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.1f, 0f), Quaternion.Euler (0, 0, 0)) as GameObject;
 		_bulletScript.speedY = -1.25f;
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b4 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.1f, 0f), Quaternion.Euler (0, 0, -12)) as GameObject;
+		GameObject b4 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y + 0.05f, 0f), Quaternion.Euler (0, 0, -12)) as GameObject;
 		_bulletScript.speedY = -2.5f;
 		_bulletRenderer.sprite = randomBullet ();
-		GameObject b5 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y - 0.1f, 0f), Quaternion.Euler (0, 0, -24)) as GameObject;
+		GameObject b5 = Instantiate (_bullet, new Vector3(transform.position.x + (_collider.size.x - 0.1f), transform.position.y, 0f), Quaternion.Euler (0, 0, -24)) as GameObject;
 
 		bulletList.Add(b1);
 		bulletList.Add(b2);
