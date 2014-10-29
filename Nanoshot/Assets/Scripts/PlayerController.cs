@@ -51,7 +51,12 @@ public class PlayerController : MonoBehaviour {
 	private Component[] audioSources;
 	private AudioSource shootSoundEffect;
 
+	private SpriteRenderer _renderer;
+	private Animator _anim;
+	private string[] _animationStates = new string[3];
+
 	private Sprite[] _bulletSprites = new Sprite[5];
+	//private Controller
 	// Use this for initialization
 	void Start () {
 		// Load assets
@@ -62,6 +67,13 @@ public class PlayerController : MonoBehaviour {
 		_bulletSprites[2] = Resources.Load<Sprite>("Art/pillbullet2");
 		_bulletSprites[3] = Resources.Load<Sprite>("Art/pillbullet3");
 		_bulletSprites[4] = Resources.Load<Sprite>("Art/pillbullet4");
+
+		_animationStates[2] = "fullHealth";
+		_animationStates[1] = "medHealth";
+		_animationStates[0] = "lowHealth";
+
+		_anim = this.gameObject.GetComponent<Animator>();
+		_renderer = this.gameObject.GetComponent<SpriteRenderer>();
 
 		GameObject bulletObject = (GameObject)_bullet;
 		_collider = GetComponent<BoxCollider2D>();
@@ -147,6 +159,9 @@ public class PlayerController : MonoBehaviour {
 		if(invulnerable > 0){
 			gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
 			gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+			if(lives > 0 ){
+				_anim.CrossFade (_animationStates[lives - 1], 0f);
+			}
 		} else {
 			gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
 			gameObject.GetComponent<BoxCollider2D>().isTrigger = true;
@@ -155,7 +170,9 @@ public class PlayerController : MonoBehaviour {
 		if (invulnerable < 0) {
 			invulnerable = 0;
 		}
+
 	}
+
 
 	/*
 	 * Triggers for player picking up powerups and hitting enemies
@@ -191,6 +208,18 @@ public class PlayerController : MonoBehaviour {
 	 */
 	public void explode(){
 		Collider.Destroy (this.gameObject);
+	}
+
+	public void resetPlayer(){
+		for (int i = 0; i < bulletList.Count; i++) {
+			Destroy(bulletList[i]);
+		}
+		lives = 3;
+		invulnerable = 0;
+		weaponType = 0;
+		tripleShotAmmo = 0;
+		quintShotAmmo = 0;
+		_anim.CrossFade (_animationStates[lives - 1], 0f);
 	}
 
 	/*

@@ -250,24 +250,8 @@ public class GameHandler : MonoBehaviour {
 			Destroy(enemyList[i]);
 		}
 
-		resetPlayer();
-
-	
-}
-
-	void resetPlayer(){
-		for (int i = 0; i < _playerScript.bulletList.Count; i++) {
-			Destroy(_playerScript.bulletList[i]);
-		}
-		_playerScript.lives = 3;
+		_playerScript.resetPlayer();
 		previousLives = _playerScript.lives;
-		_playerScript.invulnerable = 0;
-		_playerScript.weaponType = 0;
-		_playerScript.tripleShotAmmo = 0;
-		_playerScript.quintShotAmmo = 0;
 		score = 0;
-		//player.position = new Vector3(mainCam.ScreenToWorldPoint(new Vector3(0f, 0f, 0f) ).x + (_borderWidth*2), 0f, 0f);
-
-		//_playerScript.position
 	}
 }
