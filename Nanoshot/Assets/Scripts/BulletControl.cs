@@ -9,6 +9,7 @@ public class BulletControl : MonoBehaviour {
 
 	private GameHandler _gameHandler;
 	private PlayerController _playerController;
+	private WallController _wallController;
 
 	// Use this for initialization
 	void Start () {
@@ -26,7 +27,6 @@ public class BulletControl : MonoBehaviour {
 		{
 			//Other movement
 		}
-
 		if(_gameHandler.isGame){
 			Destroy(this.gameObject);
 		}

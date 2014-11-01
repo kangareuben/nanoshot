@@ -217,9 +217,15 @@ public class GameHandler : MonoBehaviour {
 			float rand = Random.Range(0, 100);
 
 			if(rand < chanceForEnemySpawn){
-				enemyList.Add(EnemyFactory.SpawnEnemyOrb(12f, Random.Range(-2, 1)).gameObject);
-				enemyList.Add(EnemyFactory.SpawnEnemyDendrite(12f, Random.Range(-2, 1), 3).gameObject);
-
+				enemyList.Add(EnemyFactory.SpawnEnemyOrb(Random.Range(12f,16f), Random.Range(-1f, 1f)).gameObject);
+				if(rand < chanceForEnemySpawn / 1.5)
+				{
+					enemyList.Add(EnemyFactory.SpawnEnemyDendrite(Random.Range(12f,14f), Random.Range(-3f, 3f), 3).gameObject);
+				}
+				if(rand < chanceForEnemySpawn / 2)
+				{
+					enemyList.Add(EnemyFactory.SpawnWall(Random.Range(12f,18f), Random.Range(-4f, 4f), 3).gameObject);
+				}
 			}
 
 			_spawnEnemyCooldown = 0;

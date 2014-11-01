@@ -7,6 +7,7 @@ public class EnemyFactory : MonoBehaviour {
 
 	public GameObject EnemyOrbPrefab;
 	public GameObject EnemyDendritePrefab;
+	public GameObject WallPrefab;
 
 	private const int maxSpawns = 20;
 
@@ -30,6 +31,13 @@ public class EnemyFactory : MonoBehaviour {
 	public static EnemyControlTwo SpawnEnemyDendrite(float x, float y, float s){
 		GameObject b = Object.Instantiate (instance.EnemyDendritePrefab, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
 		EnemyControlTwo e = b.GetComponent<EnemyControlTwo>();
+		e.speed = s;
+		return e;
+	}
+
+	public static WallController SpawnWall(float x, float y, float s){
+		GameObject b = Object.Instantiate (instance.WallPrefab, new Vector3(x, y, 0), Quaternion.identity) as GameObject;
+		WallController e = b.GetComponent<WallController>();
 		e.speed = s;
 		return e;
 	}
